@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<head>
+    <title>User Home</title>
+</head>
+<body>
+<div>
+    <p>
+        Welcome <span sec:authentication="principal.username">User</span>
+    </p>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout"/><br>
+        </form>
+    </div>
+    <p>
+        Non-admin User Homepage Placeholder
+    </p>
+
+
+</div>
+</body>
+</html>

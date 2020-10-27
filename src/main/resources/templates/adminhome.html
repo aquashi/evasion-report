@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Admin Home</title>
+</head>
+<body>
+<div>
+    <p>Welcome Administrator(<span sec:authentication="principal.username">Admin</span>)</p>
+    <div sec:authorize="isAuthenticated()">
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout"/><br>
+        </form>
+    </div>
+</div>
+<div>
+    <fieldset>
+        <legend>Create new user</legend>
+        <form action="#" th:action="@{/createUser}" th:object="${user}" method="post">
+            <input type="hidden" th:field="*{user_id}">
+            <label for="username">Username:</label>
+            <input type="text" id="username" th:field="*{username}" name="username" required><br>
+            <label for="password">Password:</label>
+            <input type="password" th:field="*{password}" id="password" name="password" required><br>
+            <input type="hidden" th:field="*{enabled}">
+            <input type="hidden" th:field="*{stationId}">
+            <input type="hidden" th:field="*{roles}">
+            <input type="submit" value="Create">
+        </form>
+    </fieldset>
+</div>
+<div>
+    <fieldset>
+        <legend>Change role:</legend>
+        <form action="#" th:action="@{/updateUserRole}" th:object="${user}" method="patch">
+            <label for="user-id">Enter User ID:</label>
+            <input type="text" id="user-id" th:field="*{user_id}"><br>
+            <input type="hidden" th:field="*{username}">
+            <input type="hidden" th:field="*{password}">
+            <input type="hidden" th:field="*{enabled}">
+            <input type="hidden" th:field="*{stationId}">
+            <label>Choose role:</label>
+            <select name="role-list">
+                <option th:field="*{roles}" value="ROLE_ADMIN"></option>
+                <option th:field="*{roles}" value="ROLE_STATION"></option>
+                <option th:field="*{roles}" value="ROLE_REVENUE"></option>
+            </select>
+            <input type="submit" value="Change Role">
+        </form>
+    </fieldset>
+</div>
+
+<h1>Admin User Account Management Page</h1>
+<p>User details:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>User ID </th>
+            <th>Username </th>
+            <th>Role </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user:${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.roles.name}"></td>
+        </tr>
+    </tbody>
+
+</table>
+</body>
+</html>
