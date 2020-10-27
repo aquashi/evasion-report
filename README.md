@@ -41,7 +41,7 @@ Users with different privileges can also search and investigate these incidents.
     spring.datasource.password=postgres
     ```
 
-4. Run the Maven project and the API is ready to use
+4. Run the Maven project and the API is ready to use.
 
 ---
 
